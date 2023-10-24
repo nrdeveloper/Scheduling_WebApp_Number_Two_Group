@@ -1,5 +1,6 @@
 package com.csis3275;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,11 +10,9 @@ import com.csis3275.repositories.I_UserRepository;
 
 @SpringBootApplication
 public class SchedulingWebAppNumberTwoGroupApplication implements CommandLineRunner{
-	private I_UserRepository userRepository;
 	
-	public SchedulingWebAppNumberTwoGroupApplication(I_UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+	@Autowired
+	I_UserRepository userRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SchedulingWebAppNumberTwoGroupApplication.class, args);
