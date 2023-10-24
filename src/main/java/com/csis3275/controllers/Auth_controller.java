@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.csis3275.models.UserModel;
 import com.csis3275.services.UserImpl;
@@ -21,6 +22,19 @@ public class Auth_controller {
 	public String loginPage() {
 		return ("login");
 	}
+	
+	// Authorize
+	@PostMapping("/login")
+	public String auth(@RequestParam String email, @RequestParam String password) {
+		boolean authorized = userService.authorizeUser(email, password);
+		if (authorized) {
+            System.out.println("Login successful");
+            return ("redirect:/");
+        } else {
+        	System.out.println("Login failed");
+            return ("redirect:/login");
+        }
+    }
 
 	// Register
 	@GetMapping("/register")
