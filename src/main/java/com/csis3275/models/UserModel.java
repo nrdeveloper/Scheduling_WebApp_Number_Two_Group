@@ -1,26 +1,19 @@
 package com.csis3275.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Entity
-@Table(name="user")
+@Document
 public class UserModel {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-	
-	@Column(name="name")
+	private String id;
+	@Field
 	private String name;
-	
-	@Column(name="email")
+	@Field
 	private String email;
-	
-	@Column(name="password")
+	@Field
 	private String password;
 	
 	// Default Constructor
@@ -57,7 +50,12 @@ public class UserModel {
 		this.password = password;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
+	}
+
+	@Override
+	public String toString() {
+		return "UserModel [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + "]";
 	}
 }
