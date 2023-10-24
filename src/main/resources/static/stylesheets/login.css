@@ -13,6 +13,7 @@ body {
 	background-color: #14213d;
 	padding: 2rem 3rem 2rem 3rem;
 	border-radius: 15px;
+	box-shadow: 0.7rem 0.7rem;
 }
 
 .login--fragment h2{
@@ -30,9 +31,9 @@ body {
 .login--form input{
 	font-size: 1.1rem;
 	padding: .8rem 2rem;
-	margin: 4px;
-	border-radius: 5px;
-	border: solid 1px #495057;
+	margin: 0.2rem;
+	border-radius: 0.3rem;
+	border: solid 0.1rem #495057;
 	background-color: transparent;
 	color: #f1faee;
 }
@@ -42,11 +43,11 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 }
 
 .login--form button{
-	font-size: 16px;
+	font-size: 1.1rem;
 	background-color: #ff9411;
-	padding: 13px;
-	margin: 4px;
-	border-radius: 5px;
+	padding: .8rem 2rem;
+	margin: 0.2rem;
+	border-radius: 0.3rem;
 	border: none;
 	&:hover{
 		cursor: pointer;
