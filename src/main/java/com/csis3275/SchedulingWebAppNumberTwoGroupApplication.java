@@ -20,10 +20,6 @@ public class SchedulingWebAppNumberTwoGroupApplication implements CommandLineRun
 
 	@Override
 	public void run(String... args) throws Exception {
-		if(userRepository.findAll().isEmpty()) {
-			userRepository.save(new UserModel("Sam Hill", "samhill@gmail.com", "ioqwhejr"));
-		}
-		
 		for (UserModel user : userRepository.findAll()) {
 			System.out.println(user);
 		}
