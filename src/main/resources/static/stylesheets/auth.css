@@ -9,26 +9,26 @@ body {
 	font-family: sans-serif;
 }
 
-.login--fragment{
+.auth--fragment{
 	background-color: #14213d;
 	padding: 2rem 3rem 2rem 3rem;
-	border-radius: 15px;
-	box-shadow: 0.7rem 0.7rem;
+	border-radius: 1.25rem;
+	box-shadow: 0.75rem 0.75rem #0b090a;
 }
 
-.login--fragment h2{
+.auth--fragment h2{
 	text-align: center;
 	color: #f1faee;
-	margin-bottom: 50px;
+	margin-bottom: 2rem;
 	font-size: 1.6rem;
 }
 
-.login--form{
+.auth--form{
 	display: flex;
 	flex-direction: column;
 }
 
-.login--form input{
+.auth--form input{
 	font-size: 1.1rem;
 	padding: .8rem 2rem;
 	margin: 0.2rem;
@@ -42,7 +42,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
     background-color: initial !important;
 }
 
-.login--form button{
+.auth--form button{
 	font-size: 1.1rem;
 	background-color: #ff9411;
 	padding: .8rem 2rem;
@@ -55,13 +55,13 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 	}
 }
 
-.login--redirect{
+.auth--redirect{
 	margin-top: 2rem;
 	text-align: center;
 	color: #adb5bd;	
 }
 
-.login--redirect a{
+.auth--redirect a{
 	text-decoration: none;
 	color: #ff9411;
 	&:hover{
