@@ -12,10 +12,22 @@ public class UserImpl {
 	@Autowired
 	I_UserRepository repository;
 	
-		// Create
-	    public UserModel addUser(UserModel newUser) {
-	        System.out.println("User is being added to the database");
-	        return repository.save(newUser);
-	}
+	// Add User
+    public UserModel addUser(UserModel newUser) {
+    	newUser.setPassword(PasswordUtils.encryptPassword(newUser.getPassword()));
+        System.out.println("User is being added to the database");
+        return repository.save(newUser);
+    }
+    
+    // Authorize
+    public boolean authorizeUser(String email, String password) {
+    	UserModel user = repository.findByEmail(email);
+    	if(user != null && PasswordUtils.verifyPassword(password, user.getPassword())){
+    		return true; // User is authorized
+    	}
+    	return false; // User is not authorized
+    }
+	    
+	    
 	    
 }

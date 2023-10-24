@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface I_UserRepository extends MongoRepository<UserModel, String>{
+	UserModel findByEmail(String email);
 }
