@@ -19,6 +19,12 @@ public class UserImpl {
         return repository.save(newUser);
     }
     
+    // Get User By Email
+    public UserModel getUserByEmail(String email) {
+    	return repository.findByEmail(email);
+    	
+    }
+    
     // Authorize
     public boolean authorizeUser(String email, String password) {
     	UserModel user = repository.findByEmail(email);
