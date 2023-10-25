@@ -24,7 +24,7 @@ public class Auth_controller {
 	@GetMapping("/")
     public String home(HttpSession session) {
         String sessionId = (String) session.getAttribute("sessionId");
-        System.out.println(sessionId);
+        System.out.println("Session ID: " + sessionId);
         if (sessionId != null) {
             // User is in a session
         	System.out.println("User is in an active session");
@@ -69,4 +69,16 @@ public class Auth_controller {
 		userService.addUser(addUser);
 		return ("redirect:/");
 	}
+	
+	// LogOut -> Delete Session
+	@GetMapping("/logout")
+    public String logout(HttpSession session) {
+		String sessionId = (String) session.getAttribute("sessionId");
+		System.out.println("Ending session for session ID: " + sessionId);
+	    if (sessionId != null) {
+	        SessionManager.removeSession(sessionId);
+	        System.out.println("Session Ended successfully");
+	    }
+        return "redirect:/login";
+    }
 }
