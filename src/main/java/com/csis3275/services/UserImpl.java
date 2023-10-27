@@ -33,6 +33,10 @@ public class UserImpl {
     	}
     	return false; // User is not authorized
     }
+    
+    // Delete User
+    
+    // Change Password
 	    
 	    
 	    
