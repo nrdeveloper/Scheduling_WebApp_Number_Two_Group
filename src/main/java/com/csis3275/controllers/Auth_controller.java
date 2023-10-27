@@ -25,7 +25,7 @@ public class Auth_controller {
     public String home(HttpSession session) {
         String sessionId = (String) session.getAttribute("sessionId");
         UserModel user = (UserModel) session.getAttribute("user");
-        if (sessionId != null) {
+        if (sessionId != null && user != null) {
             // User is in a session
         	System.out.println("User -" + user.getName() +"- is in an active session");
             return "home";
@@ -77,10 +77,26 @@ public class Auth_controller {
 		UserModel user = (UserModel) session.getAttribute("user");
 		String sessionId = (String) session.getAttribute("sessionId");
 		System.out.println("Ending session for session ID: " + sessionId);
-	    if (sessionId != null) {
-	        SessionManager.removeSession(sessionId);
-	        System.out.println("Session Ended successfully. User " + user.getName() + " had been logged out");
+	    if (sessionId != null && user != null) {
+	    	SessionManager.removeSession(sessionId);
+	        System.out.println("User -" + user.getName() + "- had been logged out ");
+	        
 	    }
         return "redirect:/login";
     }
+	
+	// Delete Account
+	@GetMapping("/delete-current-user")
+    public String deleteUser(HttpSession session) {
+		UserModel user = (UserModel) session.getAttribute("user");
+		String sessionId = (String) session.getAttribute("sessionId");
+	    if (sessionId != null && user != null) {
+	    	SessionManager.removeSession(sessionId);
+	        System.out.println("User has been deleted -" + user.getName() + "-has been deleted from the DataBase");
+	        userService.deleteUser(user.getEmail());
+	    }
+        return "redirect:/login";
+    }
+	
+	// Change Password
 }

@@ -35,6 +35,19 @@ public class UserImpl {
     }
     
     // Delete User
+    public boolean deleteUser(String email) {
+    	UserModel user = repository.findByEmail(email);
+    	if (user != null) {
+            try {
+                repository.delete(user);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return false;
+    }
+    
     
     // Change Password
 	    
