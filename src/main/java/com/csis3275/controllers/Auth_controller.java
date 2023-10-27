@@ -24,10 +24,10 @@ public class Auth_controller {
 	@GetMapping("/")
     public String home(HttpSession session) {
         String sessionId = (String) session.getAttribute("sessionId");
-        System.out.println("Session ID: " + sessionId);
+        UserModel user = (UserModel) session.getAttribute("user");
         if (sessionId != null) {
             // User is in a session
-        	System.out.println("User is in an active session");
+        	System.out.println("User -" + user.getName() +"- is in an active session");
             return "home";
         } else {
             return "redirect:/login";
