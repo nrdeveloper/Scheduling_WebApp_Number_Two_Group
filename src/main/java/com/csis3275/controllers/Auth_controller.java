@@ -49,6 +49,7 @@ public class Auth_controller {
             UserModel user = userService.getUserByEmail(email);
             String sessionId = SessionManager.createSession(user.getName(), email, password); 
             session.setAttribute("sessionId", sessionId);
+            session.setAttribute("user", user);
             System.out.println("Login successful");
             return ("redirect:/");
         } else {
@@ -73,11 +74,12 @@ public class Auth_controller {
 	// LogOut -> Delete Session
 	@GetMapping("/logout")
     public String logout(HttpSession session) {
+		UserModel user = (UserModel) session.getAttribute("user");
 		String sessionId = (String) session.getAttribute("sessionId");
 		System.out.println("Ending session for session ID: " + sessionId);
 	    if (sessionId != null) {
 	        SessionManager.removeSession(sessionId);
-	        System.out.println("Session Ended successfully");
+	        System.out.println("Session Ended successfully. User " + user.getName() + " had been logged out");
 	    }
         return "redirect:/login";
     }
