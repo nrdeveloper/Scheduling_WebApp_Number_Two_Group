@@ -50,7 +50,14 @@ public class UserImpl {
     
     
     // Change Password
-	    
-	    
-	    
+    public boolean changePassword(String email, String currentPassword, String newPassword) {
+        UserModel user = repository.findByEmail(email);
+        if (user != null && PasswordUtils.verifyPassword(currentPassword, user.getPassword())) {
+            user.setPassword(PasswordUtils.encryptPassword( newPassword)); // Update the password
+            repository.save(user); // Same ID => Updates User
+            return true; 
+        } else {
+            return false;
+        }
+    }	    
 }

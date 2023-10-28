@@ -99,4 +99,24 @@ public class Auth_controller {
     }
 	
 	// Change Password
+	@GetMapping("/change-password")
+	public String changePasswordPage() {
+		return ("change-password");
+	}
+
+	@PostMapping("/change-password")
+	public String changePassword(@RequestParam String currentPassword, @RequestParam String newPassword, HttpSession session) {
+		UserModel user = (UserModel) session.getAttribute("user");
+		boolean passwordChange = false;
+		if(user != null) {
+			passwordChange = userService.changePassword(user.getEmail(), currentPassword, newPassword);
+		}
+		if (passwordChange) {
+            System.out.println("Password was updated for user -" + user.getName() + "-");
+            return ("redirect:/");
+        } else {
+        	System.out.println("Password update failed");
+            return ("redirect:/");
+        }
+    }
 }
