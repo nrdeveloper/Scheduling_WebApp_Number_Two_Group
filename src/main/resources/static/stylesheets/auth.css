@@ -1,3 +1,14 @@
+:root {
+  --blue: #14213d;
+  --black: #0b090a;
+  --white: #f1faee;
+  --gray: #495057;
+  --light-gray: #adb5bd;
+  --accent: #ff9411;
+  --accent-hover: #ff8611; 
+}
+
+
 body {
 	margin: 0;
 	padding: 0;
@@ -5,20 +16,20 @@ body {
 	justify-content: center;
 	align-items: center;
 	min-height: 100vh;
-	background-color: #f1faee;
+	background-color: var(--white);
 	font-family: sans-serif;
 }
 
 .auth--fragment{
-	background-color: #14213d;
+	background-color: var(--blue);
 	padding: 2rem 3rem 2rem 3rem;
 	border-radius: 1.25rem;
-	box-shadow: 0.75rem 0.75rem #0b090a;
+	box-shadow: 0.75rem 0.75rem var(--black);
 }
 
 .auth--fragment h2{
 	text-align: center;
-	color: #f1faee;
+	color: var(--white);
 	margin-bottom: 2rem;
 	font-size: 1.6rem;
 }
@@ -33,9 +44,9 @@ body {
 	padding: .8rem 2rem;
 	margin: 0.2rem;
 	border-radius: 0.3rem;
-	border: solid 0.1rem #495057;
+	border: solid 0.1rem var(--gray);
 	background-color: transparent;
-	color: #f1faee;
+	color: var(--white);
 }
 
 input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
@@ -44,28 +55,28 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 
 .auth--form button{
 	font-size: 1.1rem;
-	background-color: #ff9411;
+	background-color: var(--accent);
 	padding: .8rem 2rem;
 	margin: 0.2rem;
 	border-radius: 0.3rem;
 	border: none;
 	&:hover{
 		cursor: pointer;
-	background-color:#ff8611;
+	background-color:var(--accent-hover);
 	}
 }
 
 .auth--redirect{
 	margin-top: 2rem;
 	text-align: center;
-	color: #adb5bd;	
+	color: var(--light-gray);
 }
 
 .auth--redirect a{
 	text-decoration: none;
-	color: #ff9411;
+	color: var(--accent);
 	&:hover{
-		color:#ff8611
+		color:var(--accent-hover);
 	}
 }
 

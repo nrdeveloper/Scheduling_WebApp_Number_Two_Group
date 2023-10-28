@@ -35,9 +35,29 @@ public class UserImpl {
     }
     
     // Delete User
+    public boolean deleteUser(String email) {
+    	UserModel user = repository.findByEmail(email);
+    	if (user != null) {
+            try {
+                repository.delete(user);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return false;
+    }
+    
     
     // Change Password
-	    
-	    
-	    
+    public boolean changePassword(String email, String currentPassword, String newPassword) {
+        UserModel user = repository.findByEmail(email);
+        if (user != null && PasswordUtils.verifyPassword(currentPassword, user.getPassword())) {
+            user.setPassword(PasswordUtils.encryptPassword( newPassword)); // Update the password
+            repository.save(user); // Same ID => Updates User
+            return true; 
+        } else {
+            return false;
+        }
+    }	    
 }
