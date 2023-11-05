@@ -1,5 +1,7 @@
 package com.csis3275.controllers;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.csis3275.models.UserModel;
 import com.csis3275.services.SessionManager;
 import com.csis3275.services.UserImpl;
+import com.csis3275.services.CitiesAPI;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -19,6 +22,8 @@ public class Auth_controller {
 
 	@Autowired
 	UserImpl userService;
+	@Autowired
+	CitiesAPI citiesAPI;
 	
 	// Root: Check if the user is in a session
 	@GetMapping("/")
@@ -80,7 +85,6 @@ public class Auth_controller {
 	    if (sessionId != null && user != null) {
 	    	SessionManager.removeSession(sessionId);
 	        System.out.println("User -" + user.getName() + "- had been logged out ");
-	        
 	    }
         return "redirect:/login";
     }
@@ -119,4 +123,18 @@ public class Auth_controller {
             return ("redirect:/");
         }
     }
+	
+	@GetMapping("/city")
+    public String searchCity(/*@RequestParam String cityName*/) {
+        try {
+            String response = citiesAPI.fetchCities("");
+            System.out.println(response);
+            return ("redirect:/");
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception appropriately
+            return "Error occurred: " + e.getMessage();
+        }
+    }
+	
 }
