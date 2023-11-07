@@ -8,22 +8,23 @@ import java.util.Scanner;
 
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Service
 public class CitiesAPI {
 	private String key = "n0qjFXzKbXeBI7wErk4oXw==Gx7BYROWb6R9QiIr";
 	
-	public String fetchCities(String input) throws IOException {
+	public JsonNode fetchCities(String input) throws IOException {
 		URL url = new URL("https://api.api-ninjas.com/v1/city?name=" + input);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestProperty("accept", "application/json");
 
-		// Set your API key as an "X-Api-Key" header
-		connection.setRequestProperty("X-Api-Key", key); // Replace with your actual API key
+		connection.setRequestProperty("X-Api-Key", key);
 
 		InputStream responseStream = connection.getInputStream();
-		try (Scanner scanner = new Scanner(responseStream, StandardCharsets.UTF_8).useDelimiter("\\A")) {
-			String response = scanner.hasNext() ? scanner.next() : "";
-			return (response);
-		}
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode root = mapper.readTree(responseStream);
+		return root;
 	}
 }

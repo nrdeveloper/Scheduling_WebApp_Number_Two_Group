@@ -3,6 +3,8 @@ package com.csis3275.controllers;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.csis3275.models.UserModel;
 import com.csis3275.services.SessionManager;
 import com.csis3275.services.UserImpl;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.csis3275.services.CitiesAPI;
 
 import jakarta.servlet.http.HttpSession;
@@ -125,16 +129,12 @@ public class Auth_controller {
     }
 	
 	@GetMapping("/city")
-    public String searchCity(/*@RequestParam String cityName*/) {
+	public ResponseEntity<?> searchCity(@RequestParam String cityName) {
         try {
-            String response = citiesAPI.fetchCities("");
-            System.out.println(response);
-            return ("redirect:/");
+        	JsonNode cityData = citiesAPI.fetchCities(cityName);
+            return ResponseEntity.ok(cityData);
         } catch (IOException e) {
-            e.printStackTrace();
-            // Handle the exception appropriately
-            return "Error occurred: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching city data");
         }
-    }
-	
+	}
 }

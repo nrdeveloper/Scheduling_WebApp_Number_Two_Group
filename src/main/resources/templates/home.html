@@ -27,4 +27,24 @@
 	
 </body>
  <script src="https://kit.fontawesome.com/981e04a455.js" crossorigin="anonymous"></script>
+ <script>
+ const cityInput = document.getElementById('cityInput');
+ const cityAutocompleteDropdown = document.getElementById('autocompleteDropdown');
+ 
+ cityInput.addEventListener('input', function() {
+    const userInput = cityInput.value;
+    if(userInput != ""){
+		const url = `/city?cityName=${userInput}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data[0].name);
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+	}
+});
+ </script>
 </html>
