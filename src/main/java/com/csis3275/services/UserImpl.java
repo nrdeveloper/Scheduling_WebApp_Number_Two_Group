@@ -2,9 +2,12 @@ package com.csis3275.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.csis3275.models.UserModel;
 import com.csis3275.repositories.I_UserRepository;
+
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class UserImpl {
@@ -59,5 +62,14 @@ public class UserImpl {
         } else {
             return false;
         }
-    }	    
+    }
+    
+    //Update City Parameters
+    public void updateCity(String email, String city, String latitude, String longitude) {
+    	UserModel user = repository.findByEmail(email);
+    	user.setCity(city);
+    	user.setLattitude(latitude);
+    	user.setLongitude(longitude);
+    	repository.save(user);
+    }
 }

@@ -18,8 +18,8 @@ public class CitiesAPI {
 	private String key = "n0qjFXzKbXeBI7wErk4oXw==Gx7BYROWb6R9QiIr";
 	
 	public JsonNode fetchCities(String input) throws IOException {
-		String encoded = URLEncoder.encode(input, "UTF-8");
-		URL url = new URL("https://api.api-ninjas.com/v1/city?name=" + encoded);
+		String encodedInput = URLEncoder.encode(input, "UTF-8");
+		URL url = new URL("https://api.api-ninjas.com/v1/city?name=" + encodedInput);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestProperty("accept", "application/json");
 
