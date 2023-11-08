@@ -22,7 +22,7 @@
 				</form>
 				
 				<div class="city--suggestion" id="city--suggestion">
-					<a  href="/setCity" id="city"></a>
+					<a  href="/setCity" id="a-suggestion"></a>
 				</div>
 			</li>
 			<li class="nav--profile-dropdown"><i class="fa-regular fa-user" style=" font-size: 1.3rem; padding: 0 0.5rem;"></i>User Settings
@@ -42,7 +42,7 @@
  <script th:inline="javascript">
  const cityInput = document.getElementById('cityInput');
  const cityAutocomplete = document.getElementById('city--suggestion');
- const citySuggestion = document.getElementById('city'); 
+ const citySuggestion = document.getElementById('a-suggestion'); 
  const cityForm = document.getElementById('cityForm');
  const txtLocation = document.getElementById('city--location');
  const editIcon = document.getElementById('edit-icon');
@@ -75,8 +75,8 @@ function makeLocationVisible(){
 function makeCityFormVisible(){
 	console.log("city form visible")
 	cityForm.style.display = 'inline-block';
-	txtLocation.style.display = 'none';
 	editIcon.style.display = 'none';
+	nav_location.style.display = 'none';
 }
 
 if (userCity == '' || userCity == null){
@@ -88,6 +88,11 @@ if (userCity == '' || userCity == null){
 editIcon.addEventListener('click', function(){
 	makeCityFormVisible();
 })
+
+nav_location.addEventListener('click', function(){
+	makeCityFormVisible();
+})
+
  
 // Input
 // Fetch City Data
@@ -111,6 +116,7 @@ cityInput.addEventListener('input', function() {
                     citySuggestion.innerHTML = city;
                     document.getElementById('latitude').value = latitude;
     				document.getElementById('longitude').value = longitude;
+    				citySuggestion.setAttribute('href', '/setCity?city=' + city + "&latitude=" + latitude + "&longitude=" + longitude);
                 })
                 .catch(error => {
                     console.error('Error:', 'Failed to fetch city data');

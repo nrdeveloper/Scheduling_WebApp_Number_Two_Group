@@ -129,8 +129,6 @@ public class Auth_controller {
         }
     }
 	
-	
-	
 	// City
 	@GetMapping("/city")
 	public ResponseEntity<?> searchCity(@RequestParam String cityName) {
@@ -149,6 +147,7 @@ public class Auth_controller {
 		user.setCity(city);
 		user.setLatitude(latitude);
 		user.setLongitude(longitude);
+		System.out.println("City was updated to " + user.getCity());
 		
 		return ("redirect:/");
 	}
