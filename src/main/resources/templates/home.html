@@ -10,14 +10,20 @@
 		<h1 class="nav--logo">Schedule It</h1>
 		<ul class="nav--list">
 			<li class="nav--city">
-				<i class="fa-solid fa-earth-americas" style=" font-size: 1.3rem; padding: 0rem 0.5rem"></i> 
-				<input class="city--input" type="text" id="cityInput" placeholder="Enter your city name">
+				<!-- <i class="fa-solid fa-earth-americas" style=" font-size: 1.3rem; padding: 0rem 0.5rem"></i> --> 
+				<span class="nav--location" style="color: #f1faee;">Location: </span><span id="userCity"></span><i class="fa-regular fa-pen-to-square"  style=" font-size: 1.3rem; padding: 0 0 0 0.5rem;"></i>
+				<form style="display: none;" action="/setCity" method="get">
+				    <input class="city--input" type="text" id="cityInput" name="city" placeholder="Enter your city name">
+				    <input type="hidden" name="latitude" id="latitude">
+				    <input type="hidden" name="longitude" id="longitude">
+				    <button type="submit">Set</button>
+				</form>
 				
 				<div class="city--suggestion" id="city--suggestion">
-					<a  href="/setCity" id="city">City Name</a>
+					<a  href="/setCity" id="city"></a>
 				</div>
 			</li>
-			<li class="nav--profile-dropdown"><i class="fa-regular fa-user" style=" font-size: 1.3rem; padding: 0rem 0.5rem;"></i>User Settings
+			<li class="nav--profile-dropdown"><i class="fa-regular fa-user" style=" font-size: 1.3rem; padding: 0 0.5rem;"></i>User Settings
 					<div class="dropdown-content">
 					      <a href="/logout">Log Out</a>
 					      <a href="/change-password">Change Password</a>
@@ -31,9 +37,9 @@
 	
 </body>
  <script src="https://kit.fontawesome.com/981e04a455.js" crossorigin="anonymous"></script>
- <script>
+ <script th:inline="javascript">
  const cityInput = document.getElementById('cityInput');
- const cityAutocompleteDropdown = document.getElementById('autocompleteDropdown');
+ const cityAutocomplete = document.getElementById('city--suggestion');
  const citySuggestion = document.getElementById('city'); 
   let debounceTimer;
  
@@ -41,17 +47,25 @@
  let country = "";
  let longitude = "";
  let latitude = "";
+cityAutocomplete.style.display = 'none';
+
+// Render Location in Nav
+// If city is set -> Render city name
+// If city is not set -> Render city form
+var userCity = /*[[${userCity}]]*/ '';
+document.getElementById('userCity').textContent = userCity;
 
  
+// Input
 // Fetch City Data
 cityInput.addEventListener('input', function() {
     const userInput = cityInput.value;
     clearTimeout(debounceTimer);
-    citySuggestion.style.display = 'none';
+    cityAutocomplete.style.display = 'none';
 
     debounceTimer = setTimeout(function() {
         if (userInput !== "" && userInput != city) {
-			citySuggestion.style.display = 'block';
+			cityAutocomplete.style.display = 'block';
             const encodedInput = encodeURIComponent(userInput);
             const url = `/city?cityName=${encodedInput}`;
             fetch(url)
@@ -62,6 +76,8 @@ cityInput.addEventListener('input', function() {
                     latitude = data[0].latitude;
                     longitude = data[0].longitude;
                     citySuggestion.innerHTML = city;
+                    document.getElementById('latitude').value = latitude;
+    				document.getElementById('longitude').value = longitude;
                 })
                 .catch(error => {
                     console.error('Error:', 'Failed to fetch city data');
