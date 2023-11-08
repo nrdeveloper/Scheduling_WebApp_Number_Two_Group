@@ -39,9 +39,9 @@ header nav h1{
 }
 
 nav ul li{
-	font-size: 1.35rem;
+	font-size: 1.25rem;
 	display: inline;
-	padding: 1.54rem 1rem;
+	padding: 1rem;
 	&:hover{
 		cursor: pointer;
 		color: var(--accent-hover);
@@ -91,7 +91,11 @@ nav ul li:hover .dropdown-content {
 
 
 /* City */
-.cityInput{
+.nav--city{
+	position: relative;
+}
+
+.city--input{
 	font-size: 1rem;
 	padding: 0.8rem 0.8rem;
 	border-radius: 0.3rem;
@@ -99,20 +103,24 @@ nav ul li:hover .dropdown-content {
 	background-color: transparent;
 	color: var(--white);
 	display: inline-flex;
-	align-items: center;
-	position: relative;
+	width: 15rem;
 }
 
-.cityAutocompleteDropdown {
-    display: none;
+.city--suggestion{
+    display: block;
     position: absolute;
+    width: 15rem;
     top: 100%;
-    left: 0;
+    left: 3.7rem;
     background: #fff;
     border: 1px solid #ccc;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+	padding: 0.8rem 0.8rem;
 }
 
-.cityAutocompleteDropdown.show {
-    display: block;
-}
+ .city--suggestion a{
+	 text-decoration: none;
+    color: var(--black);
+ }
 

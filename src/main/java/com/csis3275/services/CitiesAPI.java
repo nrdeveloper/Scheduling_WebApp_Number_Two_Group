@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
@@ -16,7 +18,8 @@ public class CitiesAPI {
 	private String key = "n0qjFXzKbXeBI7wErk4oXw==Gx7BYROWb6R9QiIr";
 	
 	public JsonNode fetchCities(String input) throws IOException {
-		URL url = new URL("https://api.api-ninjas.com/v1/city?name=" + input);
+		String encoded = URLEncoder.encode(input, "UTF-8");
+		URL url = new URL("https://api.api-ninjas.com/v1/city?name=" + encoded);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestProperty("accept", "application/json");
 

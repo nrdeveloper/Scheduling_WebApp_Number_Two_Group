@@ -9,9 +9,13 @@
 	<nav>
 		<h1 class="nav--logo">Schedule It</h1>
 		<ul class="nav--list">
-			<li>
-				<i class="fa-solid fa-earth-americas" style=" font-size: 1.3rem; padding: 0rem 0.5rem"></i>
-				<input class="cityInput" type="text" id="cityInput" placeholder="Enter your city name">
+			<li class="nav--city">
+				<i class="fa-solid fa-earth-americas" style=" font-size: 1.3rem; padding: 0rem 0.5rem"></i> 
+				<input class="city--input" type="text" id="cityInput" placeholder="Enter your city name">
+				
+				<div class="city--suggestion" id="city--suggestion">
+					<a  href="/setCity" id="city">City Name</a>
+				</div>
 			</li>
 			<li class="nav--profile-dropdown"><i class="fa-regular fa-user" style=" font-size: 1.3rem; padding: 0rem 0.5rem;"></i>User Settings
 					<div class="dropdown-content">
@@ -30,21 +34,40 @@
  <script>
  const cityInput = document.getElementById('cityInput');
  const cityAutocompleteDropdown = document.getElementById('autocompleteDropdown');
+ const citySuggestion = document.getElementById('city'); 
+  let debounceTimer;
  
- cityInput.addEventListener('input', function() {
-    const userInput = cityInput.value;
-    if(userInput != ""){
-		const url = `/city?cityName=${userInput}`;
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data[0].name);
+ let city= "";
+ let country = "";
+ let longitude = "";
+ let latitude = "";
 
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-	}
+ 
+// Fetch City Data
+cityInput.addEventListener('input', function() {
+    const userInput = cityInput.value;
+    clearTimeout(debounceTimer);
+    citySuggestion.style.display = 'none';
+
+    debounceTimer = setTimeout(function() {
+        if (userInput !== "" && userInput != city) {
+			citySuggestion.style.display = 'block';
+            const encodedInput = encodeURIComponent(userInput);
+            const url = `/city?cityName=${encodedInput}`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    city = data[0].name;
+                    country = data[0].country;
+                    latitude = data[0].latitude;
+                    longitude = data[0].longitude;
+                    citySuggestion.innerHTML = city;
+                })
+                .catch(error => {
+                    console.error('Error:', 'Failed to fetch city data');
+                });
+        }
+    }, 250);
 });
  </script>
 </html>
