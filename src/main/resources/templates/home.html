@@ -11,8 +11,10 @@
 		<ul class="nav--list">
 			<li class="nav--city">
 				<!-- <i class="fa-solid fa-earth-americas" style=" font-size: 1.3rem; padding: 0rem 0.5rem"></i> --> 
-				<span class="nav--location" style="color: #f1faee;">Location: </span><span id="userCity"></span><i class="fa-regular fa-pen-to-square"  style=" font-size: 1.3rem; padding: 0 0 0 0.5rem;"></i>
-				<form style="display: none;" action="/setCity" method="get">
+				<span class="city--location" id="city--location" style="color: #f1faee;">Location: </span>
+				<span id="nav--location"></span>
+				<i class="fa-regular fa-pen-to-square"  style=" font-size: 1.3rem; padding: 0 0 0 0.5rem;" id="edit-icon"></i>
+				<form class="cityForm" id="cityForm" action="/setCity" method="get">
 				    <input class="city--input" type="text" id="cityInput" name="city" placeholder="Enter your city name">
 				    <input type="hidden" name="latitude" id="latitude">
 				    <input type="hidden" name="longitude" id="longitude">
@@ -41,20 +43,51 @@
  const cityInput = document.getElementById('cityInput');
  const cityAutocomplete = document.getElementById('city--suggestion');
  const citySuggestion = document.getElementById('city'); 
+ const cityForm = document.getElementById('cityForm');
+ const txtLocation = document.getElementById('city--location');
+ const editIcon = document.getElementById('edit-icon');
+ const nav_location = document.getElementById('nav--location');
+ 
   let debounceTimer;
  
  let city= "";
  let country = "";
  let longitude = "";
  let latitude = "";
-cityAutocomplete.style.display = 'none';
-
+ 
+ cityAutocomplete.style.display = 'none';
 // Render Location in Nav
 // If city is set -> Render city name
 // If city is not set -> Render city form
-var userCity = /*[[${userCity}]]*/ '';
-document.getElementById('userCity').textContent = userCity;
 
+var userCity = /*[[${userCity}]]*/ '';
+console.log(userCity);
+
+function makeLocationVisible(){
+	console.log("location visible")
+	cityForm.style.display = 'none';
+	nav_location.textContent = userCity;
+	txtLocation.style.display = 'inline-block';
+	const space = document.createTextNode(' ');
+	txtLocation.appendChild(space);
+}
+
+function makeCityFormVisible(){
+	console.log("city form visible")
+	cityForm.style.display = 'inline-block';
+	txtLocation.style.display = 'none';
+	editIcon.style.display = 'none';
+}
+
+if (userCity == '' || userCity == null){
+	makeCityFormVisible();
+} else {
+	makeLocationVisible();
+}
+
+editIcon.addEventListener('click', function(){
+	makeCityFormVisible();
+})
  
 // Input
 // Fetch City Data

@@ -78,7 +78,7 @@ public class Auth_controller {
 	@PostMapping("/register")
 	public String registerPage(UserModel addUser) {
 		userService.addUser(addUser);
-		return ("redirect:/");
+		return ("redirect:/login");
 	}
 	
 	// LogOut -> Delete Session
@@ -146,6 +146,10 @@ public class Auth_controller {
 	public String setCity(@RequestParam String city, @RequestParam String latitude, @RequestParam String longitude, HttpSession session) {
 		UserModel user = (UserModel) session.getAttribute("user");
 		userService.updateCity(user.getEmail(), city, latitude, longitude);
+		user.setCity(city);
+		user.setLatitude(latitude);
+		user.setLongitude(longitude);
+		
 		return ("redirect:/");
 	}
 }

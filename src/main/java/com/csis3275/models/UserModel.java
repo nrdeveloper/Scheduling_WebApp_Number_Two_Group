@@ -20,7 +20,7 @@ public class UserModel {
 	@Field 
 	private String longitude;
 	@Field 
-	private String lattitude;
+	private String latitude;
 	
 	// Default Constructor
 	public UserModel() {}
@@ -76,12 +76,12 @@ public class UserModel {
 		this.longitude = longitude;
 	}
 
-	public String getLattitude() {
-		return lattitude;
+	public String getLatitude() {
+		return latitude;
 	}
 
-	public void setLattitude(String lattitude) {
-		this.lattitude = lattitude;
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
 	}
 
 	@Override

@@ -68,7 +68,7 @@ public class UserImpl {
     public void updateCity(String email, String city, String latitude, String longitude) {
     	UserModel user = repository.findByEmail(email);
     	user.setCity(city);
-    	user.setLattitude(latitude);
+    	user.setLatitude(latitude);
     	user.setLongitude(longitude);
     	repository.save(user);
     }
