@@ -31,12 +31,13 @@ public class Auth_controller {
 	
 	// Root: Check if the user is in a session
 	@GetMapping("/")
-    public String home(HttpSession session) {
+    public String home(Model model, HttpSession session) {
         String sessionId = (String) session.getAttribute("sessionId");
         UserModel user = (UserModel) session.getAttribute("user");
         if (sessionId != null && user != null) {
             // User is in a session
         	System.out.println("User -" + user.getName() +"- is in an active session");
+        	model.addAttribute("userCity", user.getCity());
             return "home";
         } else {
             return "redirect:/login";
@@ -128,6 +129,9 @@ public class Auth_controller {
         }
     }
 	
+	
+	
+	// City
 	@GetMapping("/city")
 	public ResponseEntity<?> searchCity(@RequestParam String cityName) {
         try {
@@ -136,5 +140,12 @@ public class Auth_controller {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching city data");
         }
+	}	
+	
+	@GetMapping("/setCity")
+	public String setCity(@RequestParam String city, @RequestParam String latitude, @RequestParam String longitude, HttpSession session) {
+		UserModel user = (UserModel) session.getAttribute("user");
+		userService.updateCity(user.getEmail(), city, latitude, longitude);
+		return ("redirect:/");
 	}
 }
