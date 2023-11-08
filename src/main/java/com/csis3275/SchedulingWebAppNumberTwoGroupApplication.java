@@ -20,10 +20,10 @@ public class SchedulingWebAppNumberTwoGroupApplication implements CommandLineRun
 
 	@Override
 	public void run(String... args) throws Exception {
+		// Print All Users
 		for (UserModel user : userRepository.findAll()) {
 			System.out.println(user);
 		}
-		
 	}
 
 }
