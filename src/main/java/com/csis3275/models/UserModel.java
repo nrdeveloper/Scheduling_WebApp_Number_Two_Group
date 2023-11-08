@@ -15,6 +15,12 @@ public class UserModel {
 	private String email;
 	@Field
 	private String password;
+	@Field
+	private String city;
+	@Field 
+	private String longitude;
+	@Field 
+	private String lattitude;
 	
 	// Default Constructor
 	public UserModel() {}
@@ -52,6 +58,30 @@ public class UserModel {
 
 	public String getId() {
 		return id;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLattitude() {
+		return lattitude;
+	}
+
+	public void setLattitude(String lattitude) {
+		this.lattitude = lattitude;
 	}
 
 	@Override
