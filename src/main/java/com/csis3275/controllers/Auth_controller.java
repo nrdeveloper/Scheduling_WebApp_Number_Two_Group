@@ -1,6 +1,7 @@
 package com.csis3275.controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.csis3275.models.EventModel;
 import com.csis3275.models.UserModel;
 import com.csis3275.services.SessionManager;
 import com.csis3275.services.UserImpl;
@@ -38,6 +40,9 @@ public class Auth_controller {
             // User is in a session
         	System.out.println("User -" + user.getName() +"- is in an active session");
         	model.addAttribute("userCity", user.getCity());
+        	List<EventModel> events = user.getEvents();
+        	model.addAttribute("userEvents", events);
+        	System.out.println(events);
             return "home";
         } else {
             return "redirect:/login";
@@ -60,7 +65,15 @@ public class Auth_controller {
             String sessionId = SessionManager.createSession(user.getName(), email, password); 
             session.setAttribute("sessionId", sessionId);
             session.setAttribute("user", user);
+            session.setAttribute("userEvents", user.getEvents());
+            System.out.println(user.getEvents());
             System.out.println("Login successful");
+          //  EventModel event = new EventModel("Birthday Party","2023-11-20");
+           // List<EventModel> mytest = new 
+            //user.setEvents(event);
+           // userService.addEventToUser(email, event);
+            
+            
             return ("redirect:/");
         } else {
         	System.out.println("Login failed");

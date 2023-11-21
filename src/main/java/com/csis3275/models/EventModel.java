@@ -2,25 +2,24 @@ package com.csis3275.models;
 
 import java.time.LocalDateTime;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document
+
+
 public class EventModel {
 
-	@Id 
-	private String id;
-	@Field
+
 	private String title; 
-	@Field
-	private String description;
-	@Field
-	private LocalDateTime start; 
-	@Field
-	private LocalDateTime finish;
+
+	private String start; 
+
+	private String finish;
 	
-	public EventModel(String title,LocalDateTime start, LocalDateTime finish) {
+	public EventModel(String title,String start) {
+		this.title = title;
+		this.start = start;
+	}
+	
+	public EventModel(String title,String start, String finish) {
 		this.title = title;
 		this.start = start;
 		this.finish = finish;
@@ -38,19 +37,19 @@ public class EventModel {
 		this.title = title;
 	}
 
-	public LocalDateTime getStart() {
+	public String getStart() {
 		return start;
 	}
 
-	public void setStart(LocalDateTime start) {
+	public void setStart(String start) {
 		this.start = start;
 	}
 
-	public LocalDateTime getFinish() {
+	public String getFinish() {
 		return finish;
 	}
 
-	public void setFinish(LocalDateTime finish) {
+	public void setFinish(String finish) {
 		this.finish = finish;
 	}
 

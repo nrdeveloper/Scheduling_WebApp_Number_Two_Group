@@ -1,201 +1,189 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="./stylesheets/nav.css">
-<title>Home | Schedule It</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="./stylesheets/nav.css">
+	<title>Home | Schedule It</title>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha512-oYiqA4pxB4FtUJQNc6bHXT3ks1D/Kt5PxekDFUKNPTtY0gTUZIc2ZL4Vf2WpGEm8Akk5F8A8JL6SyoKpFd2JhQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-lChw/YFCXN82SxPDX2d5P/KE1x2lBb/Ea0UEFkjj0h4kb1fGr4OK7OPBrD1x3iCC0v7Y2+UZvl9AeNq3l0rm3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js" integrity="sha512-KJ3e2Lg50HTwg4WBpVEKZ2nkrJ1P2F4ZFEIe+AJ9ZZujMokQrDHVi0WXHrWX7a6/L/sFqFTqpBPmmRcLpKYF4A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy6TAWqHcCXYl5DOErqL6fiBj5KtxMIcvb" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js" integrity="sha512-lSi02Zi1tPlWHEfITW1P4zcxyp6PYNCF1H1J9tCOyJR4C+ntPslNgqyl0xfsN2nB1e0hZJSSDFbAMBN4F8v5og==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src='index.global.js'></script>
-<script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" integrity="sha512-l2c+8fZ3H+yW5VsNqftP2U/6ot6p7gXDZyqEB7sXfuVpOvB5Ane39u5YQc41Ft46yyztJB5AOW9J+5X6BnvjPQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialDate: '2023-01-12', //Add today()
-      editable: true,
-      selectable: true,
-      businessHours: true,
-      dayMaxEvents: true, // allow "more" link when too many events
-      events: [
-        {
-          title: 'All Day Event',
-          start: '2023-01-01'
-        },
-        {
-          title: 'Long Event',
-          start: '2023-01-07',
-          end: '2023-01-10'
-        },
-        {
-          title: 'Conference',
-          start: '2023-01-11',
-          end: '2023-01-13'
-        },
-        {
-          title: 'Meeting',
-          start: '2023-01-12T10:30:00',
-          end: '2023-01-12T12:30:00'
-        },
-        {
-          title: 'Lunch',
-          start: '2023-01-12T12:00:00'
-        },
-        {
-          title: 'Meeting',
-          start: '2023-01-12T14:30:00'
-        },
-        {
-          title: 'Happy Hour',
-          start: '2023-01-12T17:30:00'
-        },
-        {
-          title: 'Dinner',
-          start: '2023-01-12T20:00:00'
-        },
-        {
-          title: 'Birthday Party',
-          start: '2023-01-13T07:00:00'
-        }
-      ]
+	<script th:inline="javascript">
+
+		document.addEventListener('DOMContentLoaded', function () {
+			function getFormattedDate() {
+				const today = new Date();
+				const year = today.getFullYear();
+				const month = String(today.getMonth() + 1).padStart(2, '0'); // Months start from 0
+				const day = String(today.getDate()).padStart(2, '0');
+
+				return `${year}-${month}-${day}`;
+			}
+
+			var calendarEl = document.getElementById('calendar');
+
+			var userEventscalendar = /*[[${userEvents}]]*/[]; // Initialize with existing events (if any)
+			var cast = userEventscalendar
+
+			const formattedDate = getFormattedDate();
+			var usual = [userEventscalendar]
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				initialDate: formattedDate,
+				editable: true,
+				selectable: true,
+				businessHours: true,
+				dayMaxEvents: true, // allow "more" link when too many events
+				events: userEventscalendar,
     });
 
     calendar.render();
   });
 
-</script>
-<style>
+        
+	</script>
+	<style>
+		body {
+			padding: 0;
+			font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+			font-size: 14px;
+		}
 
-  body {   
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-  }
-
-  #calendar {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-</style>
+		#calendar {
+			max-width: 1100px;
+			margin: 0 auto;
+		}
+	</style>
 </head>
 <header>
 	<nav>
 		<h1 class="nav--logo">Schedule It</h1>
 		<ul class="nav--list">
 			<li class="nav--city">
-				<!-- <i class="fa-solid fa-earth-americas" style=" font-size: 1.3rem; padding: 0rem 0.5rem"></i> --> 
+				<!-- <i class="fa-solid fa-earth-americas" style=" font-size: 1.3rem; padding: 0rem 0.5rem"></i> -->
 				<span class="city--location" id="city--location" style="color: #f1faee;">Location: </span>
 				<span id="nav--location"></span>
-				<i class="fa-regular fa-pen-to-square"  style=" font-size: 1.3rem; padding: 0 0 0 0.5rem;" id="edit-icon"></i>
+				<i class="fa-regular fa-pen-to-square" style=" font-size: 1.3rem; padding: 0 0 0 0.5rem;"
+					id="edit-icon"></i>
 				<form class="cityForm" id="cityForm" action="/setCity" method="get">
-				    <input class="city--input" type="text" id="cityInput" name="city" placeholder="Enter your city name">
-				    <input type="hidden" name="latitude" id="latitude">
-				    <input type="hidden" name="longitude" id="longitude">
-				    <button type="submit">Set</button>
+					<input class="city--input" type="text" id="cityInput" name="city"
+						placeholder="Enter your city name">
+					<input type="hidden" name="latitude" id="latitude">
+					<input type="hidden" name="longitude" id="longitude">
+					<button type="submit">Set</button>
 				</form>
-				
+
 				<div class="city--suggestion" id="city--suggestion">
-					<a  href="/setCity" id="a-suggestion"></a>
+					<a href="/setCity" id="a-suggestion"></a>
 				</div>
 			</li>
-			<li class="nav--profile-dropdown"><i class="fa-regular fa-user" style=" font-size: 1.3rem; padding: 0 0.5rem;"></i>User Settings
-					<div class="dropdown-content">
-					      <a href="/logout">Log Out</a>
-					      <a href="/change-password">Change Password</a>
-					      <a href="/delete-current-user">Delete Account</a>
-				    </div>
+			<li class="nav--profile-dropdown"><i class="fa-regular fa-user"
+					style=" font-size: 1.3rem; padding: 0 0.5rem;"></i>User Settings
+				<div class="dropdown-content">
+					<a href="/logout">Log Out</a>
+					<a href="/change-password">Change Password</a>
+					<a href="/delete-current-user">Delete Account</a>
+				</div>
 			</li>
 		</ul>
 	</nav>
 </header>
+
 <body>
-    <div id='calendar'></div>
+	<div id='calendar'></div>
 </body>
 <script src="https://kit.fontawesome.com/981e04a455.js" crossorigin="anonymous"></script>
 <script th:inline="javascript">
- const cityInput = document.getElementById('cityInput');
- const cityAutocomplete = document.getElementById('city--suggestion');
- const citySuggestion = document.getElementById('a-suggestion'); 
- const cityForm = document.getElementById('cityForm');
- const txtLocation = document.getElementById('city--location');
- const editIcon = document.getElementById('edit-icon');
- const nav_location = document.getElementById('nav--location');
- 
-  let debounceTimer;
- 
- let city= "";
- let country = "";
- let longitude = "";
- let latitude = "";
- 
- cityAutocomplete.style.display = 'none';
-// Render Location in Nav
-// If city is set -> Render city name
-// If city is not set -> Render city form
+	const cityInput = document.getElementById('cityInput');
+	const cityAutocomplete = document.getElementById('city--suggestion');
+	const citySuggestion = document.getElementById('a-suggestion');
+	const cityForm = document.getElementById('cityForm');
+	const txtLocation = document.getElementById('city--location');
+	const editIcon = document.getElementById('edit-icon');
+	const nav_location = document.getElementById('nav--location');
 
-var userCity = /*[[${userCity}]]*/ '';
-console.log(userCity);
+	let debounceTimer;
 
-function makeLocationVisible(){
-	console.log("location visible")
-	cityForm.style.display = 'none';
-	nav_location.textContent = userCity;
-	txtLocation.style.display = 'inline-block';
-	const space = document.createTextNode(' ');
-	txtLocation.appendChild(space);
-}
+	let city = "";
+	let country = "";
+	let longitude = "";
+	let latitude = "";
 
-function makeCityFormVisible(){
-	console.log("city form visible")
-	cityForm.style.display = 'inline-block';
-	editIcon.style.display = 'none';
-	nav_location.style.display = 'none';
-}
+	cityAutocomplete.style.display = 'none';
+	// Render Location in Nav
+	// If city is set -> Render city name
+	// If city is not set -> Render city form
 
-if (userCity == '' || userCity == null){
-	makeCityFormVisible();
-} else {
-	makeLocationVisible();
-}
+	var userCity = /*[[${userCity}]]*/ '';
+	console.log(userCity);
 
-editIcon.addEventListener('click', function(){
-	makeCityFormVisible();
-})
+	function makeLocationVisible() {
+		console.log("location visible")
+		cityForm.style.display = 'none';
+		nav_location.textContent = userCity;
+		txtLocation.style.display = 'inline-block';
+		const space = document.createTextNode(' ');
+		txtLocation.appendChild(space);
+	}
 
-nav_location.addEventListener('click', function(){
-	makeCityFormVisible();
-})
+	function makeCityFormVisible() {
+		console.log("city form visible")
+		cityForm.style.display = 'inline-block';
+		editIcon.style.display = 'none';
+		nav_location.style.display = 'none';
+	}
 
- 
-// Input
-// Fetch City Data
-cityInput.addEventListener('input', function() {
-    const userInput = cityInput.value;
-    clearTimeout(debounceTimer);
-    cityAutocomplete.style.display = 'none';
+	if (userCity == '' || userCity == null) {
+		makeCityFormVisible();
+	} else {
+		makeLocationVisible();
+	}
 
-    debounceTimer = setTimeout(function() {
-        if (userInput !== "" && userInput != city) {
-			cityAutocomplete.style.display = 'block';
-            const encodedInput = encodeURIComponent(userInput);
-            const url = `/city?cityName=${encodedInput}`;
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    city = data[0].name;
-                    country = data[0].country;
-                    latitude = data[0].latitude;
-                    longitude = data[0].longitude;
-                    citySuggestion.innerHTML = city;
-                    document.getElementById('latitude').value = latitude;
-    				document.getElementById('longitude').value = longitude;
-    				citySuggestion.setAttribute('href', '/setCity?city=' + city + "&latitude=" + latitude + "&longitude=" + longitude);
-                })
-                .catch(error => {
-                    console.error('Error:', 'Failed to fetch city data');
-                });
-        }
-    }, 250);
-});
+	editIcon.addEventListener('click', function () {
+		makeCityFormVisible();
+	})
+
+	nav_location.addEventListener('click', function () {
+		makeCityFormVisible();
+	})
+
+
+	// Input
+	// Fetch City Data
+	cityInput.addEventListener('input', function () {
+		const userInput = cityInput.value;
+		clearTimeout(debounceTimer);
+		cityAutocomplete.style.display = 'none';
+
+		debounceTimer = setTimeout(function () {
+			if (userInput !== "" && userInput != city) {
+				cityAutocomplete.style.display = 'block';
+				const encodedInput = encodeURIComponent(userInput);
+				const url = `/city?cityName=${encodedInput}`;
+				fetch(url)
+					.then(response => response.json())
+					.then(data => {
+						city = data[0].name;
+						country = data[0].country;
+						latitude = data[0].latitude;
+						longitude = data[0].longitude;
+						citySuggestion.innerHTML = city;
+						document.getElementById('latitude').value = latitude;
+						document.getElementById('longitude').value = longitude;
+						citySuggestion.setAttribute('href', '/setCity?city=' + city + "&latitude=" + latitude + "&longitude=" + longitude);
+					})
+					.catch(error => {
+						console.error('Error:', 'Failed to fetch city data');
+					});
+			}
+		}, 250);
+	});
 </script>
+
 </html>

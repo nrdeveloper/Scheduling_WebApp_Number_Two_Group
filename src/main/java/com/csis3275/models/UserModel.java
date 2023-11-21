@@ -1,5 +1,8 @@
 package com.csis3275.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -22,6 +25,27 @@ public class UserModel {
 	@Field 
 	private String latitude;
 	
+	public UserModel(String id, String name, String email, String password, String city, List<EventModel> events) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.city = city;
+		this.events = events;
+	}
+
+	@Field
+    private List<EventModel> events = new ArrayList();
+	
+	public List<EventModel> getEvents() {
+		return events;
+	}
+
+	public void setEvents(EventModel events) {
+		this.events.add((EventModel) events);
+	}
+
 	// Default Constructor
 	public UserModel() {}
 
