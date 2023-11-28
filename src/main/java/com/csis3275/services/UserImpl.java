@@ -93,4 +93,17 @@ public class UserImpl {
             repository.save(user);
         }
     }
+    
+    public void deleteEventToUser(String email, int id) {
+    	 UserModel user = repository.findByEmail(email);
+    	 List<EventModel> events = user.getEvents();
+    	 for (EventModel eventModel : events) {
+			if(id == eventModel.getId()){
+				events.remove(id);
+			}
+		}
+    	 user.setEvents((EventModel) events);
+
+         repository.save(user);
+    }
 }

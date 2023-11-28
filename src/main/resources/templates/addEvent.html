@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="#" th:action="@{/addEvent}" th:object="${newEvent}" method="post">
+    <label for="eventName">Event Name:</label>
+    <input type="text" id="eventName" th:field="*{title}" required>
+
+    <br>
+
+    <label for="eventDate">Event Date Start:</label>
+    <input type="text" placeholder="yyyy-mm-dd" id="eventDate" th:field="*{start}" required="required"
+     pattern="[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])" title="Format should be yyyy-mm-dd">
+    
+    <br>
+    
+    <label for="eventDateEnd">Event Date End:</label>
+    <input type="text" placeholder="yyyy-mm-dd" id="eventDate" th:field="*{finish}"
+     pattern="[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])" title="Format should be yyyy-mm-dd">
+    
+    <br>
+
+    <br>
+
+    <button type="submit">Add Event</button>
+</form>
+</body>
+</html>

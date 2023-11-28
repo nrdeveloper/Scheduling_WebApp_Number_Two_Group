@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -164,4 +165,22 @@ public class Auth_controller {
 		
 		return ("redirect:/");
 	}
+	
+    @GetMapping("/addEvent")
+    public String showAddEventForm(Model model) {
+        // UserModel user = (UserModel) session.getAttribute("user");
+           //	List<EventModel> events = user.getEvents();
+            model.addAttribute("newEvent", new EventModel());
+          	//System.out.println(events);
+              return "addEvent";
+          }
+         
+
+
+    @PostMapping("/addEvent")
+    public String submitAddEventForm(@ModelAttribute EventModel newEvent, HttpSession session) {
+    	UserModel user = (UserModel) session.getAttribute("user");
+    	userService.addEventToUser(user.getEmail(), newEvent);
+        return "redirect:/";
+    }
 }
