@@ -4,6 +4,8 @@
 		<link rel="stylesheet" href="./stylesheets/auth.css">
 		<meta charset="UTF-8">
 		<title>Schedule It | Login</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 	</head>
 	<body>
 		<div class="auth--fragment">
@@ -11,10 +13,11 @@
 				<form class="auth--form" action="/login" method="post">
 					<input type="email" id="email" name="email" placeholder="Email" required minlength="6"/>
 					<input type="password" id="password" name="password" placeholder="Password" required minlength="6"/>
-					<button type="submit">Log In</button>
+					<button type="submit" id="login">Log In</button>
 				</form>
 				<p class="auth--redirect">Don't have an account yet? <a href="/register">Sign Up</a></p>
 		</div>
-		
+		<script>
+		</script>
 	</body>
 </html>
