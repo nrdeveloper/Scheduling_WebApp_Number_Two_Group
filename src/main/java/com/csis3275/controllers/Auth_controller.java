@@ -142,27 +142,5 @@ public class Auth_controller {
             return ("redirect:/");
         }
     }
-	
-	// City
-	@GetMapping("/city")
-	public ResponseEntity<?> searchCity(@RequestParam String cityName) {
-        try {
-        	JsonNode cityData = citiesAPI.fetchCities(cityName);
-            return ResponseEntity.ok(cityData);
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching city data");
-        }
-	}	
-	
-	@GetMapping("/setCity")
-	public String setCity(@RequestParam String city, @RequestParam String latitude, @RequestParam String longitude, HttpSession session) {
-		UserModel user = (UserModel) session.getAttribute("user");
-		userService.updateCity(user.getEmail(), city, latitude, longitude);
-		user.setCity(city);
-		user.setLatitude(latitude);
-		user.setLongitude(longitude);
-		
-		System.out.println("City was updated to " + user.getCity());
-		return ("redirect:/");
-	}
+
 }
