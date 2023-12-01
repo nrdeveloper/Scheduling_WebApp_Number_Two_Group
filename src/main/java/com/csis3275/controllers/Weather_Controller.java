@@ -41,6 +41,7 @@ public class Weather_Controller {
         		JsonNode timeArray = hourlyArray.path("time");
         		JsonNode temperatureArray = hourlyArray.path("temperature_2m");
         		JsonNode rainArray = hourlyArray.path("rain");
+        		JsonNode showersArray = hourlyArray.path("showers");
         		JsonNode snowArray = hourlyArray.path("snowfall");
         		
         		// Sorting data by hour
@@ -51,6 +52,7 @@ public class Weather_Controller {
         		    double temperature = temperatureArray.get(i).asDouble();
         		    double rain = rainArray.get(i).asDouble();
         		    double snowfall = snowArray.get(i).asDouble();
+        		    double showers = showersArray.get(i).asDouble();
 
         		    if (!hourlyMap.containsKey(time)) {
         		    	hourlyMap.put(time, new ArrayList<>());
@@ -59,32 +61,66 @@ public class Weather_Controller {
         		    hourlyMap.get(time).add(temperature);
         		    hourlyMap.get(time).add(rain);
         		    hourlyMap.get(time).add(snowfall);
+        		    hourlyMap.get(time).add(showers);
         		}
         		
         		// Sorting data by day
         		Map<String, Map<String, Object>> dailyMap = new HashMap<>();
-        		
+
         		for (Map.Entry<String, List<Double>> entry : hourlyMap.entrySet()) {
         		    String time = entry.getKey();
         		    String day = time.substring(0, 10); // get the date
 
-        		    dailyMap.computeIfAbsent(day, k -> new HashMap<>());
+        		    dailyMap.computeIfAbsent(day, key -> new HashMap<>());
         		    Map<String, Object> dailyValues = dailyMap.get(day);
 
         		    double temperature = entry.getValue().get(0);
         		    double rain = entry.getValue().get(1);
         		    double snowfall = entry.getValue().get(2);
-
+        		    double showers = entry.getValue().get(3);
         		    
         		    dailyValues.compute("minTemp", (key, value) -> (value == null) ? temperature : Math.min((double) value, temperature));
         		    dailyValues.compute("maxTemp", (key, value) -> (value == null) ? temperature : Math.max((double) value, temperature));
         		    
-        		    dailyValues.compute("rain", (key, value) -> (value == null) ? rain > 0 : (boolean) value || rain > 0);
-        		    dailyValues.compute("snow", (key, value) -> (value == null) ? snowfall > 0 : (boolean) value || snowfall > 0);
+        		    
+        		    // Determine how many hours per day have one of the weather conditions
+        		    dailyValues.compute("totalSnowfall", (key, value) -> (value == null) ? 0 : (int) value + (snowfall > 0 ? 1 : 0));
+        		    dailyValues.compute("totalRain", (key, value) -> (value == null) ? 0 : (int) value + (rain > 0 ? 1 : 0));
+        		    dailyValues.compute("totalShowers", (key, value) -> (value == null) ? 0 : (int) value + (showers > 0 ? 1 : 0));
+        		    
+        		    if (rain == 0.0 && snowfall == 0.0 && showers == 0.0) {
+        		        dailyValues.compute("clearHours", (key, value) -> (value == null) ? 1 : (int) value + 1);
+        		    } else {
+        		        dailyValues.compute("clearHours", (key, value) -> (value == null) ? 0 : (int) value);
+        		    }
+        		    
         		}
+        		
 
-        		dailyMap.forEach((day, values) -> {System.out.println("Day: " + day + ", Min Temp: " + values.get("minTemp") +", Max Temp: " + values.get("maxTemp") +
-        		            ", Rain: " + values.get("rain") +", Snow: " + values.get("snow"));
+        		dailyMap.forEach((day, values) -> {
+        			double maxSnowfall = (int) values.getOrDefault("totalSnowfall", 0.0);
+        		    double maxRain = (int) values.getOrDefault("totalRain", 0.0);
+        		    double maxShowers = (int) values.getOrDefault("totalShowers", 0.0);
+        		    double clearHours = (int) values.getOrDefault("clearHours", 0.0);
+        		    
+        		    String dominantWeather = "Clear";
+        		    double maxWeatherValue = 0.0;
+        		    
+        		    if (maxSnowfall > maxWeatherValue) {
+        		        dominantWeather = "Snowfall";
+        		        maxWeatherValue = maxSnowfall;
+        		    }
+        		    if (maxRain > maxWeatherValue) {
+        		        dominantWeather = "Rain";
+        		        maxWeatherValue = maxRain;
+        		    }
+        		    if (maxShowers > maxWeatherValue) {
+        		        dominantWeather = "Showers";
+        		        maxWeatherValue = maxShowers;
+        		    }
+
+        			
+        			System.out.println("Day: " + day + ", Min Temp: " + values.get("minTemp") + ", Max Temp: " + values.get("maxTemp") + ", Weather: " + dominantWeather);
         		});
                 return ResponseEntity.ok(weatherData);
         	} else {
