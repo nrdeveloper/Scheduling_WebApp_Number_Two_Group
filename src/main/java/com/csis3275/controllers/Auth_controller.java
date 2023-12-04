@@ -179,7 +179,7 @@ public class Auth_controller {
         return "redirect:/";
     }
     
-	@GetMapping("/")
+	@GetMapping("/currentEvents")
     public String currentEvents(Model model, HttpSession session) {
         String sessionId = (String) session.getAttribute("sessionId");
         UserModel user = (UserModel) session.getAttribute("user");
