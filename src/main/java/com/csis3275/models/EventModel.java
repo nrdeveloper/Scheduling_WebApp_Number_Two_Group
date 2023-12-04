@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 public class EventModel {
 
+	private int id = 1;
 
 	private String title; 
 
@@ -15,20 +16,31 @@ public class EventModel {
 	private String finish;
 	
 	public EventModel(String title,String start) {
+		setId(id);
 		this.title = title;
 		this.start = start;
 	}
 	
 	public EventModel(String title,String start, String finish) {
+		setId(id);
 		this.title = title;
 		this.start = start;
 		this.finish = finish;
 	}
 	
 	public EventModel() {
-		super();
+		this.id=1;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+		this.id +=1;
+	}
+	
 	public String getTitle() {
 		return title;
 	}
