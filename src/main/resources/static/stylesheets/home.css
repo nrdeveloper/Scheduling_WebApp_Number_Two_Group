@@ -8,25 +8,72 @@
   --accent-hover: #ff8611; 
 }
 
+body {
+	padding: 0;
+	font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+	font-size: 14px;
+}
+
 .home {
 	display: flex;
 	height: 85vh;
-	width: 80%;
+	width: 75%;
 	gap: 2.5rem;
 	margin: auto;
 	justify-content: center;
 }
 
-.calendar {
+#calendar {
     flex-grow: 1;
+}
+
+
+.weather button {
+	font-size: 1.1rem;
+	background-color: var(--accent);
+	padding: .8rem 2rem;
+	margin: 0.2rem;
+	margin-top: 0;
+	border-radius: 0.3rem;
+	border: none;
+	&:hover{
+		cursor: pointer;
+		background-color: var(--accent-hover);
+	}
+}
+
+.weather button a{
+	text-decoration: none;	
+	color: black;
 }
 
 .weather {
     flex-grow: 0;
 }
 
-.weather table, .weather th, .weather td{
+.weather h1{
+	margin-top: 1rem;
+	margin-left: 1rem;
+}
+
+.weather h2{
+	color: var(--gray);
+	margin-left: 1rem;
+}
+
+.weather table{
+	margin: auto;
+	margin-top: 1rem;
+}
+
+.weather table,  .weather td{
+	padding: 0.6rem;
+}
+.weather td{
+	border-bottom: 1px solid black;
+}
+
+.weather table{
 	border: 1px solid;
 	border-collapse: collapse;
-	padding: 0.6rem;
 }
