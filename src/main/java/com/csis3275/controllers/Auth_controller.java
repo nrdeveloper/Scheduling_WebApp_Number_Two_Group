@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -33,7 +34,7 @@ public class Auth_controller {
 	CitiesAPI citiesAPI;
 	
 	// Root: Check if the user is in a session
-	@GetMapping("/")
+	@GetMapping("/home")
     public String home(Model model, HttpSession session) {
         String sessionId = (String) session.getAttribute("sessionId");
         UserModel user = (UserModel) session.getAttribute("user");
@@ -165,4 +166,37 @@ public class Auth_controller {
 		System.out.println("City was updated to " + user.getCity());
 		return ("redirect:/");
 	}
+	
+    @GetMapping("/addEvent")
+    public String showAddEventForm(Model model) {
+        // UserModel user = (UserModel) session.getAttribute("user");
+           //	List<EventModel> events = user.getEvents();
+            model.addAttribute("newEvent", new EventModel());
+          	//System.out.println(events);
+              return "addEvent";
+          }
+
+    @PostMapping("/addEvent")
+    public String submitAddEventForm(@ModelAttribute EventModel newEvent, HttpSession session) {
+    	UserModel user = (UserModel) session.getAttribute("user");
+    	userService.addEventToUser(user.getEmail(), newEvent);
+        return "redirect:/";
+    }
+    
+	@GetMapping("/")
+    public String currentEvents(Model model, HttpSession session) {
+        String sessionId = (String) session.getAttribute("sessionId");
+        UserModel user = (UserModel) session.getAttribute("user");
+        if (sessionId != null && user != null) {
+            // User is in a session
+        	System.out.println("User -" + user.getName() +"- is in an active session");
+        	model.addAttribute("userCity", user.getCity());
+        	List<EventModel> events = user.getEvents();
+        	model.addAttribute("userEvents", events);
+        	System.out.println(events);
+            return "currentevents";
+        } else {
+            return "redirect:/login";
+        }
+    }
 }
