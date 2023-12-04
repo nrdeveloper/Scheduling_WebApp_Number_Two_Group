@@ -37,7 +37,7 @@ public class Auth_controller {
 	
 	// Root: Check if the user is in a session
 	@GetMapping("/")
-    public String home(Model model, HttpSession session) {
+    public String home(Model model, HttpSession session) throws IOException {
         String sessionId = (String) session.getAttribute("sessionId");
         UserModel user = (UserModel) session.getAttribute("user");
         if (sessionId != null && user != null) {
@@ -54,7 +54,8 @@ public class Auth_controller {
         	
         	// Weather
         	if(user.getCity() != null && user.getCity() != "") {
-        		weather.fetchWeather(session);
+        		List<List<Object>> weatherList = weather.fetchWeather(session);
+        		
         	}
         	
         	

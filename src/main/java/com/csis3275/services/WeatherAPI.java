@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,11 +38,11 @@ public class WeatherAPI {
     		return root;
         }
 	
-	public ResponseEntity<?> fetchWeather(HttpSession session) {
-        try {
+	public List<List<Object>> fetchWeather(HttpSession session) throws IOException {
         	UserModel user = (UserModel) session.getAttribute("user");
         	String latitude = user.getLatitude();
         	String longitude = user.getLongitude();
+        	List<List<Object>> resultArray = new ArrayList<>();
         	if((latitude != null || latitude != "") && (longitude != null || longitude != "")) {
         		JsonNode weatherData = fetchWeatherAPI(latitude, longitude);
         		
@@ -103,7 +106,8 @@ public class WeatherAPI {
         		    
         		}
         		
-
+        		
+        		
         		dailyMap.forEach((day, values) -> {
         			double maxSnowfall = (int) values.getOrDefault("totalSnowfall", 0.0);
         		    double maxRain = (int) values.getOrDefault("totalRain", 0.0);
@@ -125,17 +129,25 @@ public class WeatherAPI {
         		        dominantWeather = "Showers";
         		        maxWeatherValue = maxShowers;
         		    }
-
-        			
-        			System.out.println("Day: " + day + ", Min Temp: " + values.get("minTemp") + ", Max Temp: " + values.get("maxTemp") + ", Weather: " + dominantWeather);
+        		    if (clearHours > maxWeatherValue) {
+        		        dominantWeather = "Clear";
+        		        maxWeatherValue = clearHours;
+        		    }
+        		    
+        		    List<Object> row = Arrays.asList(
+        		            day,
+        		            values.get("minTemp"),
+        		            values.get("maxTemp"),
+        		            dominantWeather
+        		    );
+        		    resultArray.add(row);
+        		    
         		});
-                return ResponseEntity.ok(weatherData);
-        	} else {
-        		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No location is set for weather fetching");
+        		
+        		// Sorting by date
+        		Collections.sort(resultArray, Comparator.comparing(row -> (String) row.get(0)));
+                return resultArray;
         	}
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching weather data");
-        }
-}
-}
+			return resultArray;
+}}
 
