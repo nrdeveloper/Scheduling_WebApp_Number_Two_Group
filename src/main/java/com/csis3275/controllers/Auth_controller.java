@@ -53,9 +53,13 @@ public class Auth_controller {
         	System.out.println(events);
         	
         	// Weather
-        	if(user.getCity() != null && user.getCity() != "") {
-        		List<List<Object>> weatherList = weather.fetchWeather(session);
-        		
+        	if(user.getCity() != null && user.getCity() != "") { // City is set
+        		if(user.getWeather() == null) {
+        			List<List<Object>> weatherList = weather.fetchWeather(session);
+            		user.setWeather(weatherList);
+            		System.out.println("set weather: " + user.getWeather());
+        		}
+        		model.addAttribute("weatherList", user.getWeather()); 
         	}
         	
         	
