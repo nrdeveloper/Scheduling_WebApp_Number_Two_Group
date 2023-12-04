@@ -180,6 +180,7 @@ public class Auth_controller {
     public String submitAddEventForm(@ModelAttribute EventModel newEvent, HttpSession session) {
     	UserModel user = (UserModel) session.getAttribute("user");
     	userService.addEventToUser(user.getEmail(), newEvent);
+    	user.setEvents(newEvent);
         return "redirect:/";
     }
     
