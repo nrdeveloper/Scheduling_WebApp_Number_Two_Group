@@ -1,0 +1,26 @@
+:root {
+  --blue: #14213d;
+  --black: #0b090a;
+  --white: #f1faee;
+  --gray: #495057;
+  --light-gray: #adb5bd;
+  --accent: #ff9411;
+  --accent-hover: #ff8611; 
+}
+
+
+.home {
+	display: flex;
+	height: 85vh;
+	width: 80%;
+	gap: 2.5rem;
+	margin: auto;
+}
+
+#calendar {
+    flex: 9;
+}
+
+.weather {
+    flex: 1;
+}
