@@ -28,6 +28,7 @@ public class CitiesAPI {
 		InputStream responseStream = connection.getInputStream();
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode root = mapper.readTree(responseStream);
+		connection.disconnect();
 		return root;
 	}
 }

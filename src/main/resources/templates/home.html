@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="./stylesheets/nav.css">
+	<link rel="stylesheet" href="./stylesheets/home.css">
 	<title>Home | Schedule It</title>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha512-oYiqA4pxB4FtUJQNc6bHXT3ks1D/Kt5PxekDFUKNPTtY0gTUZIc2ZL4Vf2WpGEm8Akk5F8A8JL6SyoKpFd2JhQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-lChw/YFCXN82SxPDX2d5P/KE1x2lBb/Ea0UEFkjj0h4kb1fGr4OK7OPBrD1x3iCC0v7Y2+UZvl9AeNq3l0rm3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -95,8 +96,29 @@
 </header>
 
 <body>
-	<div id='calendar'></div>
-
+	<div class="home">
+		<div id='calendar'></div>
+		<div class="weather">
+			<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Min</th>
+            <th>Max</th>
+            <th>Weather</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="day : ${weatherList}">
+            <td th:text="${day[0]}"></td>
+            <td th:text="${day[1]}"></td>
+            <td th:text="${day[2]}"></td>
+            <td th:text="${day[3]}"></td>
+        </tr>
+    </tbody>
+</table>
+		</div>
+	</div>
 	
 </body>
 <script src="https://kit.fontawesome.com/981e04a455.js" crossorigin="anonymous"></script>

@@ -24,6 +24,9 @@ public class UserModel {
 	private String longitude;
 	@Field 
 	private String latitude;
+
+	@Field
+	private List<List<Object>> weather; // For session only
 	
 	public UserModel(String id, String name, String email, String password, String city, List<EventModel> events) {
 		super();
@@ -70,6 +73,13 @@ public class UserModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public void setWeather(List<List<Object>> weather) {
+		this.weather = weather;
+	}
+	public List<List<Object>> getWeather() {
+		return weather;
 	}
 
 	public String getPassword() {
