@@ -176,7 +176,7 @@ public class Auth_controller {
     	UserModel user = (UserModel) session.getAttribute("user");
     	userService.addEventToUser(user.getEmail(), newEvent);
     	user.setEvents(newEvent);
-        return "redirect:/";
+        return "redirect:/home";
     }
     
 	@GetMapping("/currentEvents")
