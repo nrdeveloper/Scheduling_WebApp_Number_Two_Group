@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -146,7 +148,22 @@ public class WeatherAPI {
         		
         		// Sorting by date
         		Collections.sort(resultArray, Comparator.comparing(row -> (String) row.get(0)));
-                return resultArray;
+        		
+        		DateTimeFormatter inputFormatter = DateTimeFormatter.ISO_DATE;
+                DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM d");
+        		
+        		// Formatting Date
+        		List<List<Object>> formattedDateArray = resultArray.stream()
+                        .map(entry -> {
+                            String date = (String) entry.get(0);
+                            LocalDate localDate = LocalDate.parse(date, inputFormatter);
+                            String formattedDate = localDate.format(outputFormatter);
+                            entry.set(0, formattedDate);
+                            return entry;
+                        })
+                        .toList();
+        		
+                return formattedDateArray;
         	}
 			return resultArray;
 }}

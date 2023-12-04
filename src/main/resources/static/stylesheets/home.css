@@ -14,14 +14,15 @@
 	width: 80%;
 	gap: 2.5rem;
 	margin: auto;
+	justify-content: center;
 }
 
-#calendar {
-    flex: 9;
+.calendar {
+    flex-grow: 1;
 }
 
 .weather {
-    flex: 1;
+    flex-grow: 0;
 }
 
 .weather table, .weather th, .weather td{
