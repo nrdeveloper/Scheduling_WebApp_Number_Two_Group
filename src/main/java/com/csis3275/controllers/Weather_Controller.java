@@ -34,7 +34,7 @@ public class Weather_Controller {
         	String latitude = user.getLatitude();
         	String longitude = user.getLongitude();
         	if((latitude != null || latitude != "") && (longitude != null || longitude != "")) {
-        		JsonNode weatherData = weather.fetchWeather(latitude, longitude);
+        		JsonNode weatherData = weather.fetchWeatherAPI(latitude, longitude);
         		
         		JsonNode hourlyArray = weatherData.path("hourly");
         		

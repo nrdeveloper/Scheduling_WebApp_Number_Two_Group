@@ -17,6 +17,7 @@ import com.csis3275.models.EventModel;
 import com.csis3275.models.UserModel;
 import com.csis3275.services.SessionManager;
 import com.csis3275.services.UserImpl;
+import com.csis3275.services.WeatherAPI;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.csis3275.services.CitiesAPI;
@@ -31,6 +32,8 @@ public class Auth_controller {
 	UserImpl userService;
 	@Autowired
 	CitiesAPI citiesAPI;
+	@Autowired
+	WeatherAPI weather;
 	
 	// Root: Check if the user is in a session
 	@GetMapping("/")
@@ -40,10 +43,21 @@ public class Auth_controller {
         if (sessionId != null && user != null) {
             // User is in a session
         	System.out.println("User -" + user.getName() +"- is in an active session");
-        	model.addAttribute("userCity", user.getCity());
+        	
+        	// City
+        	model.addAttribute("userCity", user.getCity()); 
         	List<EventModel> events = user.getEvents();
-        	model.addAttribute("userEvents", events);
+        	
+        	// Events
+        	model.addAttribute("userEvents", events); 
         	System.out.println(events);
+        	
+        	// Weather
+        	if(user.getCity() != null && user.getCity() != "") {
+        		weather.fetchWeather(session);
+        	}
+        	
+        	
             return "home";
         } else {
             return "redirect:/login";
