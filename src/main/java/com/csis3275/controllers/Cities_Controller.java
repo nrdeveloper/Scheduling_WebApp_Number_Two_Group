@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.csis3275.models.UserModel;
 import com.csis3275.services.CitiesAPI;
 import com.csis3275.services.UserImpl;
+import com.csis3275.services.WeatherAPI;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import jakarta.servlet.http.HttpSession;
@@ -22,6 +23,8 @@ public class Cities_Controller {
 	UserImpl userService;
 	@Autowired
 	CitiesAPI citiesAPI;
+	@Autowired
+	WeatherAPI weather;
 	
 	// City
 	@GetMapping("/city")
@@ -35,14 +38,19 @@ public class Cities_Controller {
 	}	
 	
 	@GetMapping("/setCity")
-	public String setCity(@RequestParam String city, @RequestParam String latitude, @RequestParam String longitude, HttpSession session) {
+	public String setCity(@RequestParam String city, @RequestParam String latitude, @RequestParam String longitude, HttpSession session) throws IOException {
 		UserModel user = (UserModel) session.getAttribute("user");
 		userService.updateCity(user.getEmail(), city, latitude, longitude);
 		user.setCity(city);
 		user.setLatitude(latitude);
 		user.setLongitude(longitude);
+		
+		// update weather
+		weather.fetchWeatherAPI(latitude, longitude);
+		user.setWeather(weather.fetchWeather(session));
+		
 		System.out.println("City was updated to " + user.getCity());
 		
-		return ("redirect:/");
+		return ("redirect:/home");
 	}
 }
