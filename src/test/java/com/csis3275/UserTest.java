@@ -60,11 +60,15 @@ class UserTest {
         String email = "test2@example.com";
         UserModel user = new UserModel("Test User", email, "password");
         UserModel user2 = new UserModel("Test User", email, "password");
-        
         userService.addUser(user);
-        userService.addUser(user2);
         
         UserModel fetchedUser = userService.getUserByEmail(email);
+        assertEquals(email, fetchedUser.getEmail());
+        
+        userService.addUser(user2);
+        
+        UserModel fetchedUser2 = userService.getUserByEmail(email);
+        assertEquals(email, fetchedUser2.getEmail());
     }
     
     @Test
@@ -72,9 +76,17 @@ class UserTest {
         String email = "test3@example.com";
         UserModel user = new UserModel("Test User", email, "password");
         userService.addUser(user);
+        
+        UserModel fetchedUser = userService.getUserByEmail(email);
+        assertEquals(email, fetchedUser.getEmail());
+        
         userService.deleteUser(email);
+        assertEquals(fetchedUser.getEmail(), null);
         UserModel user2 = new UserModel("Test User", email, "password");
         userService.addUser(user2);
+        fetchedUser = userService.getUserByEmail(email);
+        assertEquals(email, fetchedUser.getEmail());
+        
         userService.deleteUser(email);
     }
    
