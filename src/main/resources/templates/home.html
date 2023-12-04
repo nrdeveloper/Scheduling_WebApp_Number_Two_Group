@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="./stylesheets/nav.css">
 	<title>Home | Schedule It</title>
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha512-oYiqA4pxB4FtUJQNc6bHXT3ks1D/Kt5PxekDFUKNPTtY0gTUZIc2ZL4Vf2WpGEm8Akk5F8A8JL6SyoKpFd2JhQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-lChw/YFCXN82SxPDX2d5P/KE1x2lBb/Ea0UEFkjj0h4kb1fGr4OK7OPBrD1x3iCC0v7Y2+UZvl9AeNq3l0rm3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js" integrity="sha512-KJ3e2Lg50HTwg4WBpVEKZ2nkrJ1P2F4ZFEIe+AJ9ZZujMokQrDHVi0WXHrWX7a6/L/sFqFTqpBPmmRcLpKYF4A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -86,7 +85,7 @@
 			<li class="nav--profile-dropdown"><i class="fa-regular fa-user"
 					style=" font-size: 1.3rem; padding: 0 0.5rem;"></i>User Settings
 				<div class="dropdown-content">
-					<a href="/logout">Log Out</a>
+					<a href="/logout" class="logout" id="logout">Log Out</a>
 					<a href="/change-password">Change Password</a>
 					<a href="/delete-current-user">Delete Account</a>
 				</div>
@@ -122,11 +121,16 @@
 	// If city is set -> Render city name
 	// If city is not set -> Render city form
 
+// Logout
+	const logout = document.getElementById('logout');
+	logout.addEventListener('click', function(){
+	})
+	
+// City
 	var userCity = /*[[${userCity}]]*/ '';
-	console.log(userCity);
+	var afterFormSubmitted = true;
 
-	function makeLocationVisible() {
-		console.log("location visible")
+	function makeLocationVisible(showText) {
 		cityForm.style.display = 'none';
 		nav_location.textContent = userCity;
 		txtLocation.style.display = 'inline-block';
@@ -135,7 +139,6 @@
 	}
 
 	function makeCityFormVisible() {
-		console.log("city form visible")
 		cityForm.style.display = 'inline-block';
 		editIcon.style.display = 'none';
 		nav_location.style.display = 'none';
@@ -144,7 +147,7 @@
 	if (userCity == '' || userCity == null) {
 		makeCityFormVisible();
 	} else {
-		makeLocationVisible();
+		makeLocationVisible(afterFormSubmitted);
 	}
 
 	editIcon.addEventListener('click', function () {
@@ -155,6 +158,8 @@
 		makeCityFormVisible();
 	})
 
+	cityForm.addEventListener('submit', function () {
+	});
 
 	// Input
 	// Fetch City Data

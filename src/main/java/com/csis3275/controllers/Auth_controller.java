@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.csis3275.models.EventModel;
 import com.csis3275.models.UserModel;
@@ -161,8 +162,8 @@ public class Auth_controller {
 		user.setCity(city);
 		user.setLatitude(latitude);
 		user.setLongitude(longitude);
-		System.out.println("City was updated to " + user.getCity());
 		
+		System.out.println("City was updated to " + user.getCity());
 		return ("redirect:/");
 	}
 	
