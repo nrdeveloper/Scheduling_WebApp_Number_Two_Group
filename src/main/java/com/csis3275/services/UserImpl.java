@@ -81,15 +81,7 @@ public class UserImpl {
         UserModel user = repository.findByEmail(email);
 
         if (user != null) {
-            //List<EventModel> userEvents = user.getEvents();
-
-//            if (userEvents == null) {
-//                userEvents = new ArrayList<>();
-//            }
-
-            //userEvents.add(newEvent);
             user.setEvents((EventModel) newEvent);
-
             repository.save(user);
         }
     }

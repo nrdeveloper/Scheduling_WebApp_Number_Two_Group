@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+			<link rel="stylesheet" href="./stylesheets/nav.css">
+			
+		<meta charset="UTF-8">
+		<title>Schedule It | Login</title>
+	<style>
+		body {
+			padding: 0;
+			font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+			font-size: 14px;
+		}
+
+		.table-events {
+			background-color: azure;
+			
+		}
+		.table-events td {
+			 border: 1px solid;
+		}
+		
+		.title {
+				font-size: 5em;
+			margin-top: 3%;	
+						  display: flex;
+justify-content: center;
+  align-items: center;
+		}
+		.table-div {
+			margin-top: 5%;
+			  display: flex;
+justify-content: center;
+  align-items: center;
+		}
+		
+		.table-div td{
+			padding: 20px;
+			font-size: 3em;
+		}
+		
+	</style>
+	</head>
+	<body>
+		
+<header>
+	<nav>
+		<h1 class="nav--logo">Schedule It</h1>
+		<ul class="nav--list">
+			<li class="nav--profile-dropdown"><i class="fa-regular fa-user"
+					style=" font-size: 1.3rem; padding: 0 0.5rem;"></i>User Settings
+				<div class="dropdown-content">
+					<a href="/logout">Log Out</a>
+					<a href="/change-password">Change Password</a>
+					<a href="/delete-current-user">Delete Account</a>
+				</div>
+			</li>
+		</ul>
+	</nav>
+</header>
+<h1 class="title">Upcoming Events</h1>
+<div class="table-div">
+		
+		<table class="table-events">
+		<tr th:each="event: ${userEvents}" >
+		
+		<td th:text="${event.start} + ' ' +${event.title} "></td>
+
+		</tr>
+	</table>
+	<button ><a th:href="@{'addEvent'}">Add Event</a> </button>
+</div>	
+	</body>
+</html>
