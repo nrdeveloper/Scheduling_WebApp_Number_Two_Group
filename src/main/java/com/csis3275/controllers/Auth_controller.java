@@ -37,7 +37,7 @@ public class Auth_controller {
 	WeatherAPI weather;
 	
 	// Root: Check if the user is in a session
-	@GetMapping("/home")
+	@GetMapping("/")
     public String home(Model model, HttpSession session) throws IOException {
         String sessionId = (String) session.getAttribute("sessionId");
         UserModel user = (UserModel) session.getAttribute("user");
