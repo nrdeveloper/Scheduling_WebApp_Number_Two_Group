@@ -88,13 +88,9 @@ public class Auth_controller {
             session.setAttribute("userEvents", user.getEvents());
             System.out.println(user.getEvents());
             System.out.println("Login successful");
-          //  EventModel event = new EventModel("Birthday Party","2023-11-20");
-           // List<EventModel> mytest = new 
-            //user.setEvents(event);
-           // userService.addEventToUser(email, event);
+           
             
-            
-            return ("redirect:/home");
+            return ("redirect:/");
         } else {
         	System.out.println("Login failed");
             return ("redirect:/login");
@@ -176,7 +172,7 @@ public class Auth_controller {
     	UserModel user = (UserModel) session.getAttribute("user");
     	userService.addEventToUser(user.getEmail(), newEvent);
     	user.setEvents(newEvent);
-        return "redirect:/home";
+        return "redirect:/";
     }
     
 	@GetMapping("/currentEvents")
