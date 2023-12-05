@@ -2,10 +2,82 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Add Event</title>
+	<link rel="stylesheet" href="./stylesheets/nav.css">
+		<style>
+		body {
+			padding: 0;
+			font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+			font-size: 14px;
+		}
+
+		.table-events {
+			background-color: azure;
+
+		}
+
+		.table-events td {
+			border: 1px solid;
+		}
+
+		.title {
+			font-size: 5em;
+			margin-top: 3%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.table-div {
+			margin-top: 5%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.table-div label {
+			padding: 20px;
+			font-size: 2em;
+		}
+
+	 .addevent {			
+			display: flex;
+			justify-content: center;
+			align-items: center;}
+
+	.calendar{display: flex;
+			justify-content: space-evenly;
+			align-items: center;}
+		button {
+			font-size: 1em;
+			background-color: var(--accent);
+			padding: .8rem 2rem;
+			margin: 0.2rem;
+			border-radius: 0.3rem;
+			border: none;
+			}
+		
+	</style>
 </head>
 <body>
-<form action="#" th:action="@{/addEvent}" th:object="${newEvent}" method="post">
+
+	<header>
+		<nav>
+			<h1 class="nav--logo">Schedule It</h1>
+			<ul class="nav--list">
+				<li class="nav--profile-dropdown"><i class="fa-regular fa-user"
+						style=" font-size: 1.3rem; padding: 0 0.5rem;"></i>User Settings
+					<div class="dropdown-content">
+						<a href="/logout">Log Out</a>
+						<a href="/change-password">Change Password</a>
+						<a href="/delete-current-user">Delete Account</a>
+					</div>
+				</li>
+			</ul>
+		</nav>
+	</header>
+<div class="table-div">
+<form class="table-events" action="#" th:action="@{/addEvent}" th:object="${newEvent}" method="post">
     <label for="eventName">Event Name:</label>
     <input type="text" id="eventName" th:field="*{title}" required>
 
@@ -27,5 +99,6 @@
 
     <button type="submit">Add Event</button>
 </form>
+</div>
 </body>
 </html>
